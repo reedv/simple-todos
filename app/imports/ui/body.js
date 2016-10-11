@@ -14,6 +14,9 @@ Template.body.onCreated(function bodyOnCreated() {
   // ReactiveDict is the like a collection, but is not synced with the server like collections are.
   //   This makes a ReactiveDict a convenient place to store temporary UI state like the checkbox above.
   this.state = new ReactiveDict();
+
+  // explicity subscribe to the 'tasks' collection (see app/imports/api/tasks.js)
+  Meteor.subscribe('tasks')
 });
 
 
@@ -55,14 +58,7 @@ Template.body.events({
     const text = target.text.value;
 
     // Insert a task obj. into the 'tasks' collection
-    Tasks.insert({
-      // We can assign any properties to the task object, such as the time created,
-      //   since we don't ever have to define a schema for the collection.
-      text,
-      createdAt: new Date(), // current time
-      owner: Meteor.userId(),
-      username: Meteor.user().username,
-    });
+    Meteor.call('tasks.insert', text);
 
     // Clear form for next input
     target.text.value = '';

@@ -2,10 +2,18 @@
  * Created by reedvilanueva on 10/10/16.
  */
 
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Tasks } from '../api/tasks.js';
 import './task.html';
 
+
+Template.task.helpers({
+  isOwner() {
+    // check that the current 'task' template instance owner matches the userId trying to access it
+    return this.owner === Meteor.userId();
+  },
+});
 
 
 Template.task.events({
@@ -13,21 +21,16 @@ Template.task.events({
   //   toggle the checked property.
   'click .toggle-checked'() {
     // Set the checked property to the opposite of its current value
-    Tasks.update(this._id, {
-      $set: { checked: ! this.checked },
-    });
-    // The update function on a collection takes two arguments. The first is a
-    //   selector that identifies a subset of the collection, and the second is
-    //   an update parameter that specifies what should be done to the matched objects.
+    Meteor.call('tasks.setChecked', this._id, !this.checked);
   },
 
   'click .delete'() {
-    // The remove function takes one argument, a selector that determines which
-    //   item to remove from the collection.
-    Tasks.remove(this._id);
-    // 'this' is bound to the monoDB obj. in the single task template (represented in 'task.html')
+    Meteor.call('tasks.remove', this._id);
   },
 
+  'click .toggle-private'() {
+    Meteor.call('tasks.setPrivate', this._id, !this.private);
+  },
 });
 
 
