@@ -1,11 +1,28 @@
 <body>
 <div class="container">
   <header>
-    <h1>Todo List</h1>
+    <h1>Todo List ({{incompleteCount}})</h1>
 
+    <!-- checkbox to toggle hiding of completed/checked tasks -->
+    <label class="hide-completed">
+      <input type="checkbox"/>
+      Hide Completed Tasks
+    </label>
+
+    <!--
+     If our app has the accounts-ui package, all we have to do to add a login dropdown
+     is include the loginButtons template with {{> loginButtons}}. This dropdown detects
+     which login methods have been added to the app and displays the appropriate controls.
+     In our case, the only enabled login method is accounts-password (added w/ $meteor add accounts-password).
+    -->
+    {{> loginButtons}}
+
+    <!-- only show form when currentUser returns true (ie. the user is logged in) -->
+    {{#if currentUser}}  <!-- currentUser holds info about logged-in user (eg. {{currentUser.username will display name}}) -->
     <form class="new-task">
       <input type="text" name="text" placeholder="Type to add new tasks"/>
     </form>
+    {{/if}}
   </header>
 
   <ul>
@@ -14,8 +31,10 @@
      Spacebars uses statements surrounded by double curly braces such as {{#each}} and
      {{#if}} to let you add logic and data to your views.
     -->
-    {{#each tasks}}  <!-- iter. over iterable returned by 'Template.body.helpers.tasks()'-->
-    {{> task}}  <!-- here we are referring to a specific, single collection document (bound to 'this') -->
+    {{#each tasks}}
+    <!-- iter. over iterable returned by 'Template.body.helpers.tasks()'-->
+    {{> task}}
+    <!-- here we are referring to a specific, single collection document (bound to 'this') -->
     {{/each}}
   </ul>
 </div>
