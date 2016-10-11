@@ -1,0 +1,25 @@
+<body>
+  <div class="container">
+    <header>
+      <h1>Todo List</h1>
+    </header>
+
+    <ul>
+      <!--
+       All of the code in your HTML files is compiled with Meteor's Spacebars compiler.
+       Spacebars uses statements surrounded by double curly braces such as {{#each}} and
+       {{#if}} to let you add logic and data to your views.
+      -->
+      {{#each tasks}}  <!-- iter. over iterable returned by 'tasks'-->
+        {{> task}}
+      {{/each}}
+    </ul>
+  </div>
+</body>
+
+
+
+<template name="task">
+  <li>{{text}}</li>
+</template>
+
