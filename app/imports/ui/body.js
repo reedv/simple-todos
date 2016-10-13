@@ -56,9 +56,10 @@ Template.body.events({
     // Get value from form element
     const target = event.target;
     const text = target.text.value;
+    const priority = target.priority.value;
 
     // Insert a task obj. into the 'tasks' collection
-    Meteor.call('tasks.insert', text);
+    Meteor.call('tasks.insert', text, priority);
 
     // Clear form for next input
     target.text.value = '';

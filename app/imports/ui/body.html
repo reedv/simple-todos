@@ -20,7 +20,9 @@
     <!-- only show form when currentUser returns true (ie. the user is logged in) -->
     {{#if currentUser}}  <!-- currentUser holds info about logged-in user (eg. {{currentUser.username will display name}}) -->
     <form class="new-task">
-      <input type="text" name="text" placeholder="Type to add new tasks"/>
+      <input type="text" name="text" placeholder="TODO" />
+      <input type="text" name="priority" placeholder="Priority" />
+      <input type="submit" value="Submit"/>
     </form>
     {{/if}}
   </header>

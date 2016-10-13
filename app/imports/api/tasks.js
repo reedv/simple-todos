@@ -33,8 +33,9 @@ if (Meteor.isServer) {
 Meteor.methods({
   //  Methods should be defined in code that is executed on the client AND the server
 
-  'tasks.insert'(text) {
+  'tasks.insert'(text, priority) {
     check(text, String);
+    check(priority, String);
 
     // Make sure the user is logged in before inserting a task
     if (! this.userId) {
@@ -45,6 +46,7 @@ Meteor.methods({
     //   since we don't ever have to define a schema for the collection.
     Tasks.insert({
       text,
+      priority,
       createdAt: new Date(),
       owner: this.userId,
       username: Meteor.users.findOne(this.userId).username,
